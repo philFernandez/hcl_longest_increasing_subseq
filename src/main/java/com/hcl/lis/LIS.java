@@ -1,31 +1,60 @@
 package com.hcl.lis;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * https://github.com/philFernandez/hcl_longest_increasing_subseq
+ */
 
 class LIS {
+    public static int length(int[] seq) {
+        List<Integer> longSubseq = new ArrayList<>();
 
-    public int length(int[] seq) {
-        if (seq == null || seq.length == 0)
-            return 0;
-        int[] sorted = new int[seq.length];
-        sorted[0] = seq[0];
-        int len = 1;
-        for (int num : seq) {
-            int index = Arrays.binarySearch(sorted, 0, len, num);
-            if (index < 0) {
-                index = -(index + 1);
+        // always add the first element of seq to the longSubseq
+        longSubseq.add(seq[0]);
+
+        int idxOfLongSubseq = 0;
+        // Iterate over seq. If an element encountered in seq is larger
+        // than longestSubseq[]
+        for (int i = 1; i < seq.length; i++) {
+            if (seq[i] > longSubseq.get(idxOfLongSubseq)) {
+                longSubseq.add(seq[i]);
+                idxOfLongSubseq++;
+            } else if (seq[i] < longSubseq.get(idxOfLongSubseq)) {
+                boolean traversedBack = false;
+                for (int j = longSubseq.size() - 1; j >= 0; j--) {
+                    if (longSubseq.get(j) < seq[i]) {
+                        longSubseq.remove(j + 1);
+                        longSubseq.add(j + 1, seq[i]);
+                        traversedBack = true;
+                        break;
+                    } else if (longSubseq.get(j) == seq[i]) {
+                        traversedBack = true;
+                        break;
+                    } else if (j == 0 && seq[i] < longSubseq.get(j)) {
+                        longSubseq.remove(j);
+                        longSubseq.add(j, seq[i]);
+                        traversedBack = true;
+                        break;
+                    }
+                }
+                if (!traversedBack) {
+                    longSubseq.remove(idxOfLongSubseq);
+                    longSubseq.add(idxOfLongSubseq, seq[i]);
+                }
             }
-
-            sorted[index] = num;
-            if (len == index)
-                len++;
         }
-        return len;
+        System.out.println(longSubseq);
+        return longSubseq.size();
     }
 
     public static void main(String[] args) {
-        System.out.println(new LIS().length(new int[] {1, 5, 2, 5, 3, 5, 4}));
-        System.out.println(new LIS()
-                .length(new int[] {8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,}));
+        System.out.println(length(new int[] {4, 10, 4, 3, 8, 9}));
+        System.out.println(length(new int[] {1, 5, 2, 5, 3, 5, 4}));
+        System.out.println(length(new int[] {7, 7, 7, 7, 7, 7, 7, 7, 7, 7}));
+        System.out.println(length(new int[] {10, 9, 2, 5, 3, 7, 101, 18}));
     }
 }
