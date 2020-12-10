@@ -63,9 +63,11 @@ class LIS {
     }
 
     public static void main(String[] args) {
-        System.out.println(length(new int[] {4, 10, 4, 3, 8, 9}));
-        System.out.println(length(new int[] {1, 5, 2, 5, 3, 5, 4}));
-        System.out.println(length(new int[] {7, 7, 7, 7, 7, 7, 7, 7, 7, 7}));
-        System.out.println(length(new int[] {10, 9, 2, 5, 3, 7, 101, 18}));
+        System.out.println("Length :" + length(new int[] {4, 10, 4, 3, 8, 9}) + '\n');
+        System.out.println("Length :" + length(new int[] {1, 5, 2, 5, 3, 5, 4}) + '\n');
+        System.out.println(
+                "Length :" + length(new int[] {7, 7, 7, 7, 7, 7, 7, 7, 7, 7}) + '\n');
+        System.out.println(
+                "Length :" + length(new int[] {10, 9, 2, 5, 3, 7, 101, 18}) + '\n');
     }
 }
