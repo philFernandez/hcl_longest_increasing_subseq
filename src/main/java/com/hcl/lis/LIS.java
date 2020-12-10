@@ -57,7 +57,8 @@ class LIS {
                 }
             }
         }
-        System.out.println(longSubseq);
+        System.out.println("Longest Increasing Subsequence: " + longSubseq);
+
         return longSubseq.size();
     }
 
